@@ -16,11 +16,11 @@ import org.junit.Test;
 
 public class TextInterfaceTest {
 
-    private TextInterface underTest = new TextInterface();
+    private TextInterface underTest;
 
     @Before
     public void setUp() {
-        underTest = new TextInterface();
+        underTest = new TextInterface(new TextInterfaceConfigurationProperties());
     }
 
     @Test
@@ -30,7 +30,7 @@ public class TextInterfaceTest {
 
     @Value
     @Accessors(fluent = true)
-    private class MissionStatusStub implements MissionStatus {
+    private static class MissionStatusStub implements MissionStatus {
 
         ControlCommand lastCommand = ControlCommand.MissionCommand.REPORT;
 
@@ -42,4 +42,5 @@ public class TextInterfaceTest {
         MissionRover rover = new MarsRover();
 
     }
+
 }

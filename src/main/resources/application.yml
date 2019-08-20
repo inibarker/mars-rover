@@ -1,0 +1,9 @@
+mission.control.text:
+    app-argument: text
+    prompt-retries: 5
+    command-map:
+      forward: f
+      backward: b
+      left: l
+      right: r
+      quit: q
