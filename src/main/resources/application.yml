@@ -1,4 +1,5 @@
-mission.control.text:
+mission.control:
+  text:
     app-argument: text
     prompt-retries: 5
     command-map:
@@ -7,3 +8,6 @@ mission.control.text:
       left: l
       right: r
       quit: q
+  communications:
+    fixed-delay:
+      millis: 1000

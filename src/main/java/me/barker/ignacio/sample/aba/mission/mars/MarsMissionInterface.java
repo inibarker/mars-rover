@@ -4,8 +4,10 @@ import me.barker.ignacio.sample.aba.mission.contract.ControlCommand;
 import me.barker.ignacio.sample.aba.mission.contract.MissionInterface;
 import me.barker.ignacio.sample.aba.mission.contract.MissionStatus;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public class MarsMissionInterface implements MissionInterface {
 
     @Override
