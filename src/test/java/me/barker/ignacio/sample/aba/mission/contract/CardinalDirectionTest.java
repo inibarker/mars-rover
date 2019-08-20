@@ -1,10 +1,13 @@
 package me.barker.ignacio.sample.aba.mission.contract;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class CardinalDirectionTest extends TestCase {
+import static org.junit.Assert.assertEquals;
 
-    public void testRotateFromNorth() {
+public class CardinalDirectionTest {
+
+    @Test
+    public void testRotate() {
         assertEquals(CardinalDirection.EAST, CardinalDirection.NORTH.rotateClockwise());
         assertEquals(CardinalDirection.WEST, CardinalDirection.NORTH.rotateAnticlockwise());
 

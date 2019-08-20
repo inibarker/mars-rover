@@ -10,10 +10,10 @@ import org.apache.commons.lang3.tuple.Pair;
 @Value
 public class MarsTerrain implements MissionTerrain {
 
-    final Pair<Integer, Integer> dimensions;
+    Pair<Integer, Integer> dimensions;
 
-    final Map<Integer, Set<Integer>> obstacles;
+    Map<Integer, Set<Integer>> obstacles;
 
-    final Pair<Boolean, Boolean> wrapping;
+    Pair<Boolean, Boolean> wrapping;
 
 }
