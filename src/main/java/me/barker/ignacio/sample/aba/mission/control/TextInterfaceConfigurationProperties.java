@@ -15,13 +15,12 @@ import org.springframework.lang.NonNull;
 
 @Log4j2
 @Data
-@NoArgsConstructor
 @ConfigurationProperties("mission.control.text")
 public class TextInterfaceConfigurationProperties {
 
     private String appArgument;
 
-    private Integer promptRetries;
+    private Integer promptRetries = 1;
 
     private TextCommand commandMap;
 

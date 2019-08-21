@@ -1,15 +1,16 @@
 package me.barker.ignacio.sample.aba.mission.control;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import lombok.Value;
 import lombok.experimental.Accessors;
+import me.barker.ignacio.sample.aba.mission.contract.CardinalDirection;
 import me.barker.ignacio.sample.aba.mission.contract.ControlCommand;
 import me.barker.ignacio.sample.aba.mission.contract.MissionRover;
 import me.barker.ignacio.sample.aba.mission.contract.MissionStatus;
 import me.barker.ignacio.sample.aba.mission.contract.MissionTerrain;
-import me.barker.ignacio.sample.aba.mission.mars.MarsRover;
-import me.barker.ignacio.sample.aba.mission.mars.MarsTerrain;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Value
@@ -20,9 +21,42 @@ class MissionStatusStub implements MissionStatus {
 
     boolean commandProcessed = true;
 
-    MissionTerrain terrain = new MarsTerrain(
-        Pair.of(1, 1), new HashMap<>(), Pair.of(false, false));
+    MissionTerrain terrain = new MissionTerrain() {
+        @Override
+        public Pair<Integer, Integer> getDimensions() {
+            return Pair.of(1, 1);
+        }
+        @Override
+        public Pair<Boolean, Boolean> getWrapping() {
+            return Pair.of(false, false);
+        }
+        @Override
+        public Map<Integer, Set<Integer>> getObstacles() {
+            return new HashMap<>();
+        }
+    };
 
-    MissionRover rover = new MarsRover();
+    MissionRover rover = new MissionRover() {
+
+        @Override
+        public Pair<Integer, Integer> getPosition() {
+            return Pair.of(1, 1);
+        }
+
+        @Override
+        public CardinalDirection getFacing() {
+            return CardinalDirection.NORTH;
+        }
+
+        @Override
+        public void move(final boolean backwards) {
+
+        }
+
+        @Override
+        public void turn(final boolean clockwise) {
+
+        }
+    };
 
 }

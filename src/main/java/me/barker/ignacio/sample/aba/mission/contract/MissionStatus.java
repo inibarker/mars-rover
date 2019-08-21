@@ -1,5 +1,8 @@
 package me.barker.ignacio.sample.aba.mission.contract;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
 /**
  * Mission status report
  */
@@ -11,11 +14,6 @@ public interface MissionStatus {
     ControlCommand lastCommand();
 
     /**
-     * Returns last command execution status.
-     */
-    boolean commandProcessed();
-
-    /**
      * Terrain details.
      */
     MissionTerrain terrain();
@@ -24,5 +22,24 @@ public interface MissionStatus {
      * Rover status details.
      */
     MissionRover rover();
+
+    static MissionStatus of(final MissionTerrain terrainParam,
+                            final MissionRover roverParam,
+                            final ControlCommand commandParam) {
+        return new MissionStatus() {
+
+            @Getter
+            @Accessors(fluent = true)
+            private ControlCommand lastCommand = commandParam;
+
+            @Getter
+            @Accessors(fluent = true)
+            public MissionTerrain terrain = terrainParam;
+
+            @Getter
+            @Accessors(fluent = true)
+            public MissionRover rover = roverParam;
+        };
+    }
 
 }

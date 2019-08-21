@@ -12,20 +12,20 @@ public interface MissionTerrain {
 
     /**
      * Terrain dimensions.
-     * @return A pair containing latitudinal size at left and longitudinal at right
+     * @return A pair containing latitudinal size (parallels) at left and longitudinal at right (meridians)
      */
     Pair<Integer, Integer> getDimensions();
 
     /**
-     * Obstacles position.
+     * Terrain dimension wrapping.
+     * @return Pair indicating if terrain has latitudinal wrap (poles) at left and longitudinal wrap (equator) at right.
+     */
+    Pair<Boolean, Boolean> getWrapping();
+
+    /**
+     * Obstacles locations.
      * @return Latitude key based map containing collections of obstacles' longitudes
      */
     Map<Integer, Set<Integer>> getObstacles();
-
-    /**
-     * Terrain dimension wrapping
-     * @return Pair indicating if terrain is latitudinal wrapped at left and longitudinal wrapped at right.
-     */
-    Pair<Boolean, Boolean> getWrapping();
 
 }

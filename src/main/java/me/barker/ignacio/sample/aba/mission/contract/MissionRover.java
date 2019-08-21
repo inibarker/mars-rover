@@ -8,25 +8,25 @@ import org.apache.commons.lang3.tuple.Pair;
 public interface MissionRover {
 
     /**
-     * Last reported position
+     * Last reported position.
      * @return A pair containing latitudinal position at left and longitudinal at right
      */
     Pair<Integer, Integer> getPosition();
 
     /**
-     * Last reported facing
+     * Last reported facing.
      */
     CardinalDirection getFacing();
 
     /**
-     * Send move command to rover.
+     * Send move command to rover step-by-step.
      * @param backwards send <code>true</code> if the instruction is to move backwards.
      */
-    boolean move(final boolean backwards);
+    void move(final boolean backwards);
 
     /**
-     * Send turn command to rover.
+     * Send turn command to rover step-by-step.
      * @param clockwise send <code>true</code> if the instruction is to turn clockwise.
      */
-    boolean turn(final boolean clockwise);
+    void turn(final boolean clockwise);
 }

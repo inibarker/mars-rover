@@ -1,19 +1,29 @@
 package me.barker.ignacio.sample.aba.mission.mars;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 import me.barker.ignacio.sample.aba.mission.contract.MissionTerrain;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Value
+@Builder
 public class MarsTerrain implements MissionTerrain {
 
-    Pair<Integer, Integer> dimensions;
+    @NonNull
+    @Builder.Default
+    Pair<Integer, Integer> dimensions = Pair.of(1, 1);
 
-    Map<Integer, Set<Integer>> obstacles;
+    @NonNull
+    @Builder.Default
+    Pair<Boolean, Boolean> wrapping = Pair.of(false, false);
 
-    Pair<Boolean, Boolean> wrapping;
+    @NonNull
+    @Builder.Default
+    Map<Integer, Set<Integer>> obstacles = new HashMap<>();
 
 }

@@ -43,6 +43,13 @@ public class TextInterface extends AbstractControlInterface implements Applicati
         log.info("Finished Application Runner for Text Interface");
     }
 
+    @Override
+    public void report(final MissionStatus report) {
+        System.out.println("Last command processed was " + report.lastCommand());
+        System.out.println(String.format("Rover is now at %s facing: %s",
+            report.rover().getPosition(), report.rover().getFacing()));
+    }
+
     /**
      * Text Interface runner
      */
@@ -78,14 +85,5 @@ public class TextInterface extends AbstractControlInterface implements Applicati
             .switchIfEmpty(Mono.fromRunnable(() ->
                 System.err.println("Wrong command. Try " + configurationProperties.getCommandByMapping())))
             .repeatWhenEmpty(configurationProperties.getPromptRetries(), Flux::repeat);
-    }
-
-    @Override
-    public void report(final MissionStatus report) {
-        System.out.println("Last command" +
-            (report.commandProcessed() ? " ":" NOT ") +
-            "processed was " + report.lastCommand());
-        System.out.println(String.format("Rover is now at %s facing: %s",
-            report.rover().getPosition(), report.rover().getFacing()));
     }
 }

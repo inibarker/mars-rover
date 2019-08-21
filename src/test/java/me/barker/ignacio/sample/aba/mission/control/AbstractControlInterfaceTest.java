@@ -15,7 +15,9 @@ public class AbstractControlInterfaceTest {
 
     @Before
     public void setUp() {
-        underTest = new ControlInterfaceStub();
+        underTest = new AbstractControlInterface() {
+
+        };
     }
 
     @Test
@@ -28,10 +30,6 @@ public class AbstractControlInterfaceTest {
             .expectNextMatches(command -> TEST_CONTROL_COMMAND.equals(command)
                 && command.equals(underTest.lastCommand()))
             .verifyComplete();
-    }
-
-    private static class ControlInterfaceStub extends AbstractControlInterface {
-
     }
 
 }
