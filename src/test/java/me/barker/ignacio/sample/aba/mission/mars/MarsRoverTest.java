@@ -15,9 +15,10 @@ public class MarsRoverTest {
 
     @Before
     public void setUp() {
-        underTest = new MarsRover();
-        underTest.setPosition(INITIAL_POSITION);
-        underTest.setFacing(CardinalDirection.NORTH);
+        underTest = MarsRover.builder()
+            .position(INITIAL_POSITION)
+            .facing(CardinalDirection.NORTH)
+            .build();
     }
 
     @Test

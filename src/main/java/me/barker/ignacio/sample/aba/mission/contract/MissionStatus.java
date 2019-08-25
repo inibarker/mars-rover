@@ -11,17 +11,17 @@ public interface MissionStatus {
     /**
      * Returns last executed command.
      */
-    ControlCommand lastCommand();
+    <T extends ControlCommand> T lastCommand();
 
     /**
      * Terrain details.
      */
-    MissionTerrain terrain();
+    <T extends MissionTerrain> T terrain();
 
     /**
      * Rover status details.
      */
-    MissionRover rover();
+    <T extends MissionRover> T rover();
 
     static MissionStatus of(final MissionTerrain terrainParam,
                             final MissionRover roverParam,

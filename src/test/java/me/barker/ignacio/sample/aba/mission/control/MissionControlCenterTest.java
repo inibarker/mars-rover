@@ -42,7 +42,7 @@ public class MissionControlCenterTest {
             reportInterface
         );
 
-        when(controlInterface.nextCommand()).thenReturn(Mono.just(TEST_CONTROL_COMMAND));
+        when(controlInterface.nextCommand()).thenReturn(Mono.just(ControlCommand.MissionCommand.REPORT));
         when(missionInterface.operate(any())).thenReturn(Mono.just(TEST_REPORT));
     }
 

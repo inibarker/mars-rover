@@ -1,5 +1,6 @@
 package me.barker.ignacio.sample.aba.mission.mars;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.var;
 import me.barker.ignacio.sample.aba.mission.contract.CardinalDirection;
@@ -7,6 +8,7 @@ import me.barker.ignacio.sample.aba.mission.contract.MissionRover;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Data
+@Builder(toBuilder = true)
 public class MarsRover implements MissionRover {
 
     private Pair<Integer, Integer> position;

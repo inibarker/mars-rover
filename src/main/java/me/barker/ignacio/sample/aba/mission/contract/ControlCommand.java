@@ -5,10 +5,6 @@ package me.barker.ignacio.sample.aba.mission.contract;
  */
 public interface ControlCommand {
 
-    enum Status {
-        CREATED, SENDING, RECEIVED, PROCESSING, FINISHED;
-    }
-
     enum RoverCommand implements ControlCommand {
         FORWARD, BACKWARD, LEFT, RIGHT
     }

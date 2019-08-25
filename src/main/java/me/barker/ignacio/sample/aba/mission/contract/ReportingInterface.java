@@ -9,5 +9,5 @@ public interface ReportingInterface {
      * Report consumer
      * @param report mission status update
      */
-    void report(final MissionStatus report);
+    <T extends MissionStatus> void report(final T report);
 }

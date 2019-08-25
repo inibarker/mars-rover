@@ -11,3 +11,22 @@ mission.control:
   communications:
     fixed-delay:
       millis: 1000
+
+mission.mars:
+  terrain:
+    height: 50
+    width: 50
+    h-wrap: true
+    w-wrap: true
+    obstacles:
+      5: 10, 11, 12, 14, 15, 16, 30, 40, 45
+      6: 10, 11, 12, 14, 15, 36
+      7: 1, 11, 12, 30, 40, 45
+      20: 14
+      25: 15, 16,30
+      45: 40
+      49: 45
+  rover:
+    parallel: 0
+    meridian: 0
+    direction: 0
