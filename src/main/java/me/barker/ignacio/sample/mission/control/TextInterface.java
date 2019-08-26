@@ -45,6 +45,8 @@ public class TextInterface extends AbstractControlInterface implements Applicati
 
     @Override
     public void report(final MissionStatus report) {
+        System.out.println("\nTerrain square surface: " + report.terrain().getDimensions());
+        System.out.println("Border wrapping: " + report.terrain().getWrapping());
         System.out.println("Last command processed was " + report.lastCommand());
         System.out.println(String.format("Rover is now at %s facing: %s",
             report.rover().getPosition(), report.rover().getFacing()));
@@ -61,9 +63,9 @@ public class TextInterface extends AbstractControlInterface implements Applicati
                 .doFirst(() -> System.out.println("\nCOMMAND YOUR ROVER " + configurationProperties.getCommandMap()))
                 .doOnError(throwable -> log.error("Oops! Something went wrong...", throwable))
                 .doAfterTerminate(scanner::close))
+            .doAfterTerminate(() -> System.out.println("\nControl-C to close the app."))
             .subscribeOn(COMMAND_PROMPT_SCHEDULER)
             .subscribe(this::queueCommand);
-        log.info("Control-C to close the app");
     }
 
     private Flux<ControlCommand> promptCommand(final Scanner commandReader) {

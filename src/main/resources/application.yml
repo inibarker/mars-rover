@@ -7,6 +7,7 @@ mission.control:
       move-backwards: b
       turn-left: l
       turn-right: r
+      report-status: s
       quit: q
   communications:
     fixed-delay:

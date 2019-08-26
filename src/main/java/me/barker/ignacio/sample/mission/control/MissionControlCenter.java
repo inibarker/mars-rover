@@ -12,16 +12,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
 
 @Log4j2
 @Component
 @RequiredArgsConstructor
 public class MissionControlCenter {
-
-    private static final Scheduler COMMUNICATIONS_SCHEDULER = Schedulers.
-        newSingle(MissionControlCenter.class.getSimpleName());
 
     private final MissionInterface missionInterface;
 
@@ -53,9 +48,7 @@ public class MissionControlCenter {
     }
 
     private Disposable publishReport(Mono<MissionStatus> missionStatus) {
-        return missionStatus
-            .publishOn(COMMUNICATIONS_SCHEDULER)
-            .subscribe(reportInterface::report);
+        return missionStatus.subscribe(reportInterface::report);
     }
 
     private void waitDisposable(final Disposable command) {

@@ -33,6 +33,7 @@ public class TextInterfaceConfigurationProperties {
         mapCommand(ControlCommand.MOVE_BACKWARDS, getCommandMap().getMoveBackwards().toLowerCase());
         mapCommand(ControlCommand.TURN_LEFT, getCommandMap().getTurnLeft());
         mapCommand(ControlCommand.TURN_RIGHT, getCommandMap().getTurnRight());
+        mapCommand(ControlCommand.REPORT, getCommandMap().getReportStatus());
         mapCommand(ControlCommand.QUIT, getCommandMap().getQuit());
         log.info("Text command configuration: " + this);
     }
@@ -55,7 +56,7 @@ public class TextInterfaceConfigurationProperties {
     private static class TextCommand {
 
         @NonNull
-        private String moveForwards, moveBackwards, turnLeft, turnRight, quit;
+        private String moveForwards, moveBackwards, turnLeft, turnRight, reportStatus, quit;
 
     }
 }
