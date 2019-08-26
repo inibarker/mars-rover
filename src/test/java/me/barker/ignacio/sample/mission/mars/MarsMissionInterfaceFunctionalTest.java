@@ -53,7 +53,7 @@ public class MarsMissionInterfaceFunctionalTest {
     @Test
     public void testOperateReport() {
         StepVerifier.create(underTest
-            .operate(ControlCommand.MissionCommand.REPORT))
+            .operate(ControlCommand.REPORT))
             .assertNext(missionStatus -> {
                 assertEquals(marsRoverTest, missionStatus.rover());
                 assertEquals(TEST_TERRAIN_NO_WRAP_NO_OBSTACLES, missionStatus.terrain());
@@ -68,10 +68,10 @@ public class MarsMissionInterfaceFunctionalTest {
         underTest.setUp();
 
         StepVerifier.create(underTest
-            .operate(ControlCommand.RoverCommand.MOVE_FORWARDS)
+            .operate(ControlCommand.MOVE_FORWARDS)
             .repeat(TERRAIN_HEIGHT).last())
             .assertNext(report -> {
-                assertEquals(ControlCommand.RoverCommand.MOVE_FORWARDS, report.lastCommand());
+                assertEquals(ControlCommand.MOVE_FORWARDS, report.lastCommand());
                 assertEquals(Pair.of(TERRAIN_HEIGHT - 1, 0), report.rover().getPosition());
                 assertEquals(TEST_TERRAIN_NO_WRAP_NO_OBSTACLES, report.terrain());
             }).verifyComplete();
@@ -85,10 +85,10 @@ public class MarsMissionInterfaceFunctionalTest {
         underTest.setUp();
 
         StepVerifier.create(underTest
-            .operate(ControlCommand.RoverCommand.MOVE_FORWARDS)
+            .operate(ControlCommand.MOVE_FORWARDS)
             .repeat(TERRAIN_MIDDLE_HEIGHT).last())
             .assertNext(report -> {
-                assertEquals(ControlCommand.RoverCommand.MOVE_FORWARDS, report.lastCommand());
+                assertEquals(ControlCommand.MOVE_FORWARDS, report.lastCommand());
                 assertEquals(Pair.of(1, TERRAIN_WIDTH - 1), report.rover().getPosition());
                 assertEquals(TEST_TERRAIN_WITH_WRAP_NO_OBSTACLES, report.terrain());
             }).verifyComplete();
@@ -103,11 +103,11 @@ public class MarsMissionInterfaceFunctionalTest {
         underTest.setUp();
 
         StepVerifier.create(underTest
-            .operate(ControlCommand.RoverCommand.MOVE_FORWARDS)
-            .then(underTest.operate(ControlCommand.RoverCommand.TURN_RIGHT)
-            .then(underTest.operate(ControlCommand.RoverCommand.MOVE_FORWARDS))))
+            .operate(ControlCommand.MOVE_FORWARDS)
+            .then(underTest.operate(ControlCommand.TURN_RIGHT)
+            .then(underTest.operate(ControlCommand.MOVE_FORWARDS))))
             .assertNext(report -> {
-                assertEquals(ControlCommand.RoverCommand.MOVE_FORWARDS, report.lastCommand());
+                assertEquals(ControlCommand.MOVE_FORWARDS, report.lastCommand());
                 assertEquals(CardinalDirection.WEST, report.rover().getFacing());
                 assertEquals(Pair.of(0, 0), report.rover().getPosition());
                 assertEquals(TEST_TERRAIN_NO_WRAP_NO_OBSTACLES, report.terrain());
@@ -123,11 +123,11 @@ public class MarsMissionInterfaceFunctionalTest {
         underTest.setUp();
 
         StepVerifier.create(underTest
-            .operate(ControlCommand.RoverCommand.MOVE_FORWARDS)
-            .then(underTest.operate(ControlCommand.RoverCommand.TURN_RIGHT)
-                .then(underTest.operate(ControlCommand.RoverCommand.MOVE_FORWARDS))))
+            .operate(ControlCommand.MOVE_FORWARDS)
+            .then(underTest.operate(ControlCommand.TURN_RIGHT)
+                .then(underTest.operate(ControlCommand.MOVE_FORWARDS))))
             .assertNext(report -> {
-                assertEquals(ControlCommand.RoverCommand.MOVE_FORWARDS, report.lastCommand());
+                assertEquals(ControlCommand.MOVE_FORWARDS, report.lastCommand());
                 assertEquals(CardinalDirection.WEST, report.rover().getFacing());
                 assertEquals(Pair.of(TERRAIN_HEIGHT - 1, TERRAIN_WIDTH - 1), report.rover().getPosition());
                 assertEquals(TEST_TERRAIN_WITH_WRAP_NO_OBSTACLES, report.terrain());

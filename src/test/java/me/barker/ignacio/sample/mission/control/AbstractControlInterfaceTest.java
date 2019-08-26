@@ -9,14 +9,13 @@ import reactor.test.StepVerifier;
 
 public class AbstractControlInterfaceTest {
 
-    private static final ControlCommand TEST_CONTROL_COMMAND = ControlCommand.MissionCommand.REPORT;
+    private static final ControlCommand TEST_CONTROL_COMMAND = ControlCommand.REPORT;
 
     private AbstractControlInterface underTest;
 
     @Before
     public void setUp() {
         underTest = new AbstractControlInterface() {
-
         };
     }
 

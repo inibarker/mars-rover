@@ -17,7 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
 @Accessors(fluent = true)
 class MissionStatusStub implements MissionStatus {
 
-    ControlCommand lastCommand = ControlCommand.MissionCommand.REPORT;
+    ControlCommand lastCommand = ControlCommand.REPORT;
 
     boolean commandProcessed = true;
 

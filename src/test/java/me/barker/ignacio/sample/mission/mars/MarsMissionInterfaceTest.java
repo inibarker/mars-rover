@@ -54,7 +54,7 @@ public class MarsMissionInterfaceTest {
     @Test
     public void testBuildReport() {
         StepVerifier.create(Flux.fromStream(Arrays
-            .stream(ControlCommand.MissionCommand.values())
+            .stream(ControlCommand.values())
             .map(expectedCommand -> MissionStatus.of(TEST_TERRAIN_NO_WRAP_NO_OBSTACLES, marsRoverTest, expectedCommand)))
             .flatMap(expectedReport -> underTest
                 .buildReport(expectedReport.lastCommand())
@@ -63,7 +63,7 @@ public class MarsMissionInterfaceTest {
             .recordWith(ArrayList::new)
             .expectRecordedMatches(reportPairList -> reportPairList.stream()
                 .allMatch(reportPair -> reportPair.getLeft().equals(reportPair.getRight())))
-            .expectNextCount(ControlCommand.MissionCommand.values().length)
+            .expectNextCount(ControlCommand.values().length)
             .verifyComplete();
     }
 

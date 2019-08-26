@@ -58,20 +58,21 @@ public class TextInterface extends AbstractControlInterface implements Applicati
         Mono.just(new Scanner(System.in))
             .doFirst(() -> log.debug("Text command scanner ready"))
             .flatMapMany(scanner -> promptCommand(scanner)
-                .doFirst(() -> System.out.println("\nCOMMAND YOUR ROVER " + configurationProperties.getCommandByMapping()))
+                .doFirst(() -> System.out.println("\nCOMMAND YOUR ROVER " + configurationProperties.getCommandMap()))
                 .doOnError(throwable -> log.error("Oops! Something went wrong...", throwable))
                 .doAfterTerminate(scanner::close))
             .subscribeOn(COMMAND_PROMPT_SCHEDULER)
             .subscribe(this::queueCommand);
+        log.info("Control-C to close the app");
     }
 
     private Flux<ControlCommand> promptCommand(final Scanner commandReader) {
         return Flux.create(emitter -> promptLoop(commandReader)
             .flatMap(controlCommand -> Mono.just(controlCommand)
                 .map(emitter::next)
-                .filter(fluxSink -> ControlCommand.MissionCommand.QUIT.equals(controlCommand))
+                .filter(fluxSink -> ControlCommand.QUIT.equals(controlCommand))
                 .doOnNext(x -> System.out.println("Quitting prompt.")))
-            .repeatWhenEmpty(configurationProperties.getPromptRetries(), Flux::repeat)
+            .repeatWhenEmpty(Flux::repeat)
             .subscribe(FluxSink::complete));
     }
 
@@ -82,7 +83,7 @@ public class TextInterface extends AbstractControlInterface implements Applicati
             .map(configurationProperties::getControlCommand)
             .flatMap(Mono::justOrEmpty)
             .switchIfEmpty(Mono.fromRunnable(() ->
-                System.err.println("Wrong command. Try " + configurationProperties.getCommandByMapping())))
+                System.err.println("Wrong command. Try " + configurationProperties.getCommandMap())))
             .repeatWhenEmpty(configurationProperties.getPromptRetries(), Flux::repeat);
     }
 }

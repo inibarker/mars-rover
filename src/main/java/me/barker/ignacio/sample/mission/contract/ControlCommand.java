@@ -5,16 +5,9 @@ import lombok.ToString;
 /**
  * Mission Control Command
  */
-public interface ControlCommand {
+@ToString
+public enum ControlCommand {
 
-    @ToString
-    enum RoverCommand implements ControlCommand {
-        MOVE_FORWARDS, MOVE_BACKWARDS, TURN_LEFT, TURN_RIGHT
-    }
-
-    @ToString
-    enum MissionCommand implements ControlCommand {
-        REPORT, WAIT, QUIT
-    }
+    MOVE_FORWARDS, MOVE_BACKWARDS, TURN_LEFT, TURN_RIGHT, REPORT, QUIT;
 
 }

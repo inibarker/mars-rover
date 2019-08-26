@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MissionControlCenterTest {
 
-    private static final ControlCommand TEST_CONTROL_COMMAND = ControlCommand.MissionCommand.REPORT;
+    private static final ControlCommand TEST_CONTROL_COMMAND = ControlCommand.REPORT;
 
     private static final MissionStatus TEST_REPORT = new MissionStatusStub();
 
@@ -42,7 +42,7 @@ public class MissionControlCenterTest {
             reportInterface
         );
 
-        when(controlInterface.nextCommand()).thenReturn(Mono.just(ControlCommand.MissionCommand.REPORT));
+        when(controlInterface.nextCommand()).thenReturn(Mono.just(ControlCommand.REPORT));
         when(missionInterface.operate(any())).thenReturn(Mono.just(TEST_REPORT));
     }
 

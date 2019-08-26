@@ -16,11 +16,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import static me.barker.ignacio.sample.mission.contract.ControlCommand.RoverCommand.MOVE_BACKWARDS;
-import static me.barker.ignacio.sample.mission.contract.ControlCommand.RoverCommand.MOVE_FORWARDS;
-import static me.barker.ignacio.sample.mission.contract.ControlCommand.RoverCommand.TURN_LEFT;
-import static me.barker.ignacio.sample.mission.contract.ControlCommand.RoverCommand.TURN_RIGHT;
-
 @Log4j2
 @Component
 @RequiredArgsConstructor
@@ -42,12 +37,13 @@ public class MarsMissionInterface implements MissionInterface {
     @Override
     public Mono<MissionStatus> operate(final ControlCommand command) {
         return Mono.fromRunnable(() -> operateRover(command))
+            .doOnError(log::error)
             .then(buildReport(command));
     }
 
     @Override
     public Mono<MissionStatus> report() {
-        return buildReport(ControlCommand.MissionCommand.REPORT);
+        return buildReport(ControlCommand.REPORT);
     }
 
     Mono<MissionStatus> buildReport(final ControlCommand missionCommand) {
@@ -55,13 +51,13 @@ public class MarsMissionInterface implements MissionInterface {
     }
 
     private void operateRover(final ControlCommand command) {
-        if (MOVE_FORWARDS.equals(command)) {
+        if (ControlCommand.MOVE_FORWARDS.equals(command)) {
             moveRover(false);
-        } else if (MOVE_BACKWARDS.equals(command)) {
+        } else if (ControlCommand.MOVE_BACKWARDS.equals(command)) {
             moveRover(true);
-        } else if (TURN_LEFT.equals(command)) {
+        } else if (ControlCommand.TURN_LEFT.equals(command)) {
             missionRover.turn(false);
-        } else if (TURN_RIGHT.equals(command)) {
+        } else if (ControlCommand.TURN_RIGHT.equals(command)) {
             missionRover.turn(true);
         }
     }
@@ -111,5 +107,4 @@ public class MarsMissionInterface implements MissionInterface {
         }
         return newPosition;
     }
-
 }

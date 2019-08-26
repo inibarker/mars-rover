@@ -52,7 +52,7 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
         underTest.setUp();
 
         StepVerifier.create(Flux.fromStream(IntStream.range(0, COMMAND_AMOUNT)
-            .mapToObj(i -> ControlCommand.RoverCommand.values())
+            .mapToObj(i -> ControlCommand.values())
             .map(roverCommands -> roverCommands[RandomUtils.nextInt(0, roverCommands.length)]))
             .flatMap(randomCommand -> underTest.report()
             .map(MissionStatus::rover).cast(MarsRover.class)
@@ -77,8 +77,8 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
     private static void assertFreeMovement(final OperationReport operationReport)
         throws AssertionError {
 
-        val moverBackwards = ControlCommand.RoverCommand.MOVE_BACKWARDS.equals(operationReport.getCommandExecuted());
-        if (ControlCommand.RoverCommand.MOVE_FORWARDS.equals(operationReport.getCommandExecuted())
+        val moverBackwards = ControlCommand.MOVE_BACKWARDS.equals(operationReport.getCommandExecuted());
+        if (ControlCommand.MOVE_FORWARDS.equals(operationReport.getCommandExecuted())
                 || moverBackwards) {
             val testRover = operationReport.getPreviousRover().toBuilder().build();
             testRover.move(moverBackwards);
@@ -88,10 +88,10 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
     }
 
     private static void assertFacing(final OperationReport operationReport) {
-        if (ControlCommand.RoverCommand.TURN_LEFT.equals(operationReport.getCommandExecuted())) {
+        if (ControlCommand.TURN_LEFT.equals(operationReport.getCommandExecuted())) {
             assertEquals(operationReport.getPreviousRover().getFacing().rotateAnticlockwise(),
                 operationReport.getMissionReport().rover().getFacing());
-        } else if (ControlCommand.RoverCommand.TURN_RIGHT.equals(operationReport.getCommandExecuted())) {
+        } else if (ControlCommand.TURN_RIGHT.equals(operationReport.getCommandExecuted())) {
             assertEquals(operationReport.getPreviousRover().getFacing().rotateClockwise(),
                 operationReport.getMissionReport().rover().getFacing());
         } else {

@@ -29,11 +29,11 @@ public class TextInterfaceConfigurationProperties {
 
     @PostConstruct
     public void setUp() {
-        mapCommand(ControlCommand.RoverCommand.MOVE_FORWARDS, getCommandMap().getMoveForwards().toLowerCase());
-        mapCommand(ControlCommand.RoverCommand.MOVE_BACKWARDS, getCommandMap().getMoveBackwards().toLowerCase());
-        mapCommand(ControlCommand.RoverCommand.TURN_LEFT, getCommandMap().getTurnLeft());
-        mapCommand(ControlCommand.RoverCommand.TURN_RIGHT, getCommandMap().getTurnRight());
-        mapCommand(ControlCommand.MissionCommand.QUIT, getCommandMap().getQuit());
+        mapCommand(ControlCommand.MOVE_FORWARDS, getCommandMap().getMoveForwards().toLowerCase());
+        mapCommand(ControlCommand.MOVE_BACKWARDS, getCommandMap().getMoveBackwards().toLowerCase());
+        mapCommand(ControlCommand.TURN_LEFT, getCommandMap().getTurnLeft());
+        mapCommand(ControlCommand.TURN_RIGHT, getCommandMap().getTurnRight());
+        mapCommand(ControlCommand.QUIT, getCommandMap().getQuit());
         log.info("Text command configuration: " + this);
     }
 
