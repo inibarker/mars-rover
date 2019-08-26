@@ -1,6 +1,7 @@
 package me.barker.ignacio.sample.aba.mission.contract;
 
-import lombok.Getter;
+import lombok.ToString;
+import lombok.Value;
 import lombok.experimental.Accessors;
 
 /**
@@ -26,20 +27,15 @@ public interface MissionStatus {
     static MissionStatus of(final MissionTerrain terrainParam,
                             final MissionRover roverParam,
                             final ControlCommand commandParam) {
-        return new MissionStatus() {
-
-            @Getter
-            @Accessors(fluent = true)
-            private ControlCommand lastCommand = commandParam;
-
-            @Getter
-            @Accessors(fluent = true)
-            public MissionTerrain terrain = terrainParam;
-
-            @Getter
-            @Accessors(fluent = true)
-            public MissionRover rover = roverParam;
-        };
+        return new DefaultMissionStatus(commandParam, terrainParam, roverParam);
     }
 
+    @Value
+    @ToString
+    @Accessors(fluent = true)
+    class DefaultMissionStatus implements MissionStatus {
+        private ControlCommand lastCommand;
+        public MissionTerrain terrain;
+        public MissionRover rover;
+    }
 }

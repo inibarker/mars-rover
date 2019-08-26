@@ -22,19 +22,75 @@ public class MarsRoverTest {
     }
 
     @Test
-    public void testMoveForwardsOnce() {
+    public void testMoveForwardsOnceNorth() {
         underTest.move(false);
         assertEquals(CardinalDirection.NORTH, underTest.getFacing());
-        assertEquals(INITIAL_POSITION.getLeft() + 1, underTest.getPosition().getLeft().intValue());
-        assertEquals(INITIAL_POSITION.getRight(), underTest.getPosition().getRight());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft() + 1, INITIAL_POSITION.getRight()), underTest.getPosition());
+    }
+
+    @Test
+    public void testMoveForwardsOnceEast() {
+        underTest = underTest.toBuilder()
+            .facing(CardinalDirection.EAST)
+            .build();
+        underTest.move(false);
+        assertEquals(CardinalDirection.EAST, underTest.getFacing());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft(), INITIAL_POSITION.getRight() + 1), underTest.getPosition());
+    }
+
+    @Test
+    public void testGetFactorNorth() {
+        underTest = underTest.toBuilder().facing(CardinalDirection.NORTH).build();
+        assertEquals(1, underTest.getFactor(false));
+        assertEquals(-1, underTest.getFactor(true));
+    }
+
+    @Test
+    public void testGetFactorSouth() {
+        underTest = underTest.toBuilder().facing(CardinalDirection.SOUTH).build();
+        assertEquals(-1, underTest.getFactor(false));
+        assertEquals(1, underTest.getFactor(true));
+    }
+
+    @Test
+    public void testGetFactorEast() {
+        underTest = underTest.toBuilder().facing(CardinalDirection.EAST).build();
+        assertEquals(1, underTest.getFactor(false));
+        assertEquals(-1, underTest.getFactor(true));
+    }
+
+    @Test
+    public void testGetFactorWest() {
+        underTest = underTest.toBuilder().facing(CardinalDirection.WEST).build();
+        assertEquals(-1, underTest.getFactor(false));
+        assertEquals(1, underTest.getFactor(true));
+    }
+
+    @Test
+    public void testMoveForwardsOnceWest() {
+        underTest = underTest.toBuilder()
+            .facing(CardinalDirection.WEST)
+            .build();
+        underTest.move(false);
+        assertEquals(CardinalDirection.WEST, underTest.getFacing());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft(), INITIAL_POSITION.getRight() - 1), underTest.getPosition());
+    }
+
+    @Test
+    public void testMoveForwardsOnceSouth() {
+        underTest = underTest.toBuilder()
+            .facing(CardinalDirection.SOUTH)
+            .build();
+        underTest.move(false);
+        assertEquals(CardinalDirection.SOUTH, underTest.getFacing());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft() - 1, INITIAL_POSITION.getRight()), underTest.getPosition());
     }
 
     @Test
     public void testMoveBackwardsOnce() {
         underTest.move(true);
         assertEquals(CardinalDirection.NORTH, underTest.getFacing());
-        assertEquals(INITIAL_POSITION.getLeft() - 1, underTest.getPosition().getLeft().intValue());
-        assertEquals(INITIAL_POSITION.getRight(), underTest.getPosition().getRight());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft() - 1, INITIAL_POSITION.getRight()), underTest.getPosition());
     }
 
     @Test
@@ -57,8 +113,7 @@ public class MarsRoverTest {
         underTest.move(false);
         underTest.move(false);
         assertEquals(CardinalDirection.SOUTH, underTest.getFacing());
-        assertEquals(INITIAL_POSITION.getLeft() - 3, underTest.getPosition().getLeft().intValue());
-        assertEquals(INITIAL_POSITION.getRight() - 2, underTest.getPosition().getRight().intValue());
+        assertEquals(Pair.of(INITIAL_POSITION.getLeft() - 3, INITIAL_POSITION.getRight() - 2), underTest.getPosition());
     }
 
     @Test

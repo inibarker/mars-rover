@@ -1,39 +1,54 @@
 package me.barker.ignacio.sample.aba.mission.mars;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.var;
+import lombok.val;
 import me.barker.ignacio.sample.aba.mission.contract.CardinalDirection;
 import me.barker.ignacio.sample.aba.mission.contract.MissionRover;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Data
 @Builder(toBuilder = true)
 public class MarsRover implements MissionRover {
 
-    private Pair<Integer, Integer> position;
+    @Builder.Default
+    private Pair<Integer, Integer> position = Pair.of(0, 0);
 
-    private CardinalDirection facing;
+    @Builder.Default
+    private CardinalDirection facing = CardinalDirection.NORTH;
 
     @Override
     public void move(final boolean backwards) {
-        if (position == null || facing == null) return;
-        var factor = backwards ? -1 : 1;
-        if (CardinalDirection.SOUTH.equals(facing)
-                || CardinalDirection.WEST.equals(facing)) {
-            factor = 0 - factor;
-        }
-        if (CardinalDirection.NORTH.equals(facing)
-                || CardinalDirection.SOUTH.equals(facing)) {
-            position = Pair.of(position.getLeft() + factor, position.getRight());
-        } else {
-            position = Pair.of(position.getLeft(), position.getRight() + factor);
-        }
+        if (!ObjectUtils.allNotNull(getPosition(), getFacing())) return;
+        Optional.of(getFacing())
+            .filter(Predicate.isEqual(CardinalDirection.NORTH)
+                .or(Predicate.isEqual(CardinalDirection.SOUTH)))
+            .map(cardinalDirection -> (Consumer<Integer>) factor ->
+                setPosition(Pair.of(getPosition().getLeft() + factor, getPosition().getRight())))
+            .orElse(factor ->
+                setPosition(Pair.of(getPosition().getLeft(), getPosition().getRight() + factor)))
+            .accept(getFactor(backwards));
+    }
+
+    int getFactor(final boolean backwards) {
+        val isNorthOrEast = Predicate.isEqual(CardinalDirection.NORTH)
+            .or(Predicate.isEqual(CardinalDirection.EAST));
+
+        return Optional.of(getFacing())
+            .filter(isNorthOrEast.and(x -> backwards)
+                .or(isNorthOrEast.negate().and(x -> !backwards)))
+            .map(x -> -1)
+            .orElse(1);
     }
 
     @Override
     public void turn(final boolean clockwise) {
-        if (facing == null) return;
-        facing = clockwise ? facing.rotateClockwise() : facing.rotateAnticlockwise();
+        if (getFacing() == null) return;
+        setFacing(clockwise ? getFacing().rotateClockwise() : getFacing().rotateAnticlockwise());
     }
 }

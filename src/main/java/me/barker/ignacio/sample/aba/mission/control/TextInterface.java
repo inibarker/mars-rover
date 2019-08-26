@@ -79,7 +79,6 @@ public class TextInterface extends AbstractControlInterface implements Applicati
         return Mono.fromCallable(scanner::next)
             .doFirst(() -> System.out.print("prompt> "))
             .repeatWhenEmpty(configurationProperties.getPromptRetries(), Flux::repeat)
-            .map(String::toLowerCase)
             .map(configurationProperties::getControlCommand)
             .flatMap(Mono::justOrEmpty)
             .switchIfEmpty(Mono.fromRunnable(() ->

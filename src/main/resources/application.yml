@@ -3,10 +3,10 @@ mission.control:
     app-argument: text
     prompt-retries: 5
     command-map:
-      forward: f
-      backward: b
-      left: l
-      right: r
+      move-forwards: f
+      move-backwards: b
+      turn-left: l
+      turn-right: r
       quit: q
   communications:
     fixed-delay:

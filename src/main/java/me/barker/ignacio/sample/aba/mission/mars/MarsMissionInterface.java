@@ -2,15 +2,10 @@ package me.barker.ignacio.sample.aba.mission.mars;
 
 import javax.annotation.PostConstruct;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.barker.ignacio.sample.aba.mission.contract.ControlCommand;
 import me.barker.ignacio.sample.aba.mission.contract.MissionInterface;
-import me.barker.ignacio.sample.aba.mission.contract.MissionRover;
 import me.barker.ignacio.sample.aba.mission.contract.MissionStatus;
-import me.barker.ignacio.sample.aba.mission.contract.MissionTerrain;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -20,11 +15,9 @@ import reactor.core.publisher.Mono;
 @EnableConfigurationProperties(MarsMissionContextProperties.class)
 public class MarsMissionInterface implements MissionInterface {
 
-    @Getter(AccessLevel.PACKAGE)
-    private MissionTerrain missionTerrain;
+    private MarsTerrain missionTerrain;
 
-    @Getter(AccessLevel.PACKAGE)
-    private MissionRover missionRover;
+    private MarsRover missionRover;
 
     private final MarsMissionContextProperties marsMissionContextProperties;
 
@@ -42,6 +35,11 @@ public class MarsMissionInterface implements MissionInterface {
 
     @Override
     public Mono<MissionStatus> report() {
-        return Mono.just(MissionStatus.of(missionTerrain, missionRover, ControlCommand.MissionCommand.REPORT));
+        return buildReport(ControlCommand.MissionCommand.REPORT);
     }
+
+    Mono<MissionStatus> buildReport(final ControlCommand missionCommand) {
+        return Mono.fromCallable(() -> MissionStatus.of(missionTerrain, missionRover, missionCommand));
+    }
+
 }

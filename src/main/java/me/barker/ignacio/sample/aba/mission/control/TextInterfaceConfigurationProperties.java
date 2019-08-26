@@ -29,10 +29,10 @@ public class TextInterfaceConfigurationProperties {
 
     @PostConstruct
     public void setUp() {
-        mapCommand(ControlCommand.RoverCommand.FORWARD, getCommandMap().getForward().toLowerCase());
-        mapCommand(ControlCommand.RoverCommand.BACKWARD, getCommandMap().getBackward().toLowerCase());
-        mapCommand(ControlCommand.RoverCommand.LEFT, getCommandMap().getLeft());
-        mapCommand(ControlCommand.RoverCommand.RIGHT, getCommandMap().getRight());
+        mapCommand(ControlCommand.RoverCommand.MOVE_FORWARDS, getCommandMap().getMoveForwards().toLowerCase());
+        mapCommand(ControlCommand.RoverCommand.MOVE_BACKWARDS, getCommandMap().getMoveBackwards().toLowerCase());
+        mapCommand(ControlCommand.RoverCommand.TURN_LEFT, getCommandMap().getTurnLeft());
+        mapCommand(ControlCommand.RoverCommand.TURN_RIGHT, getCommandMap().getTurnRight());
         mapCommand(ControlCommand.MissionCommand.QUIT, getCommandMap().getQuit());
         log.info("Text command configuration: " + this);
     }
@@ -45,7 +45,9 @@ public class TextInterfaceConfigurationProperties {
     }
 
     Optional<ControlCommand> getControlCommand(final String textCommand) {
-        return Optional.ofNullable(getCommandByMapping().get(textCommand));
+        return Optional.ofNullable(textCommand)
+            .map(String::toLowerCase)
+            .map(getCommandByMapping()::get);
     }
 
     @Data
@@ -53,7 +55,7 @@ public class TextInterfaceConfigurationProperties {
     private static class TextCommand {
 
         @NonNull
-        private String forward, backward, left, right, quit;
+        private String moveForwards, moveBackwards, turnLeft, turnRight, quit;
 
     }
 }

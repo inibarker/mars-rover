@@ -8,6 +8,8 @@ import me.barker.ignacio.sample.aba.mission.contract.CardinalDirection;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static java.lang.Math.abs;
+
 @Data
 @ConfigurationProperties("mission.mars")
 public class MarsMissionContextProperties {
@@ -18,7 +20,7 @@ public class MarsMissionContextProperties {
 
     public MarsTerrain extractTerrainData() {
         return MarsTerrain.builder()
-            .dimensions(Pair.of(getTerrain().getHeight(), getTerrain().getWidth()))
+            .dimensions(Pair.of(abs(getTerrain().getHeight()), abs(getTerrain().getWidth())))
             .wrapping(Pair.of(getTerrain().getHWrap(), getTerrain().getHWrap()))
             .obstacles(getTerrain().getObstacles())
             .build();
