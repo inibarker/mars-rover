@@ -1,10 +1,9 @@
 package me.barker.ignacio.sample.mission.mars;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.RandomUtils;
@@ -22,17 +21,13 @@ public interface MarsMissionInterfaceTestConstants {
 
     Pair<Integer, Integer> TEST_TERRAIN_DIMENSIONS = Pair.of(TERRAIN_HEIGHT, TERRAIN_WIDTH);
 
-    Map<Integer, Set<Integer>> TEST_TERRAIN_OBSTACLES = Optional
-        .of(new HashMap<Integer, Set<Integer>>())
-        .flatMap(obstacleMap -> Optional.of(IntStream
-            .range(0, TERRAIN_HEIGHT)
-            .map(i -> RandomUtils.nextInt(0, TERRAIN_HEIGHT))
-            .peek(randomLatitude -> IntStream.of(RandomUtils.nextInt(0, TERRAIN_WIDTH))
-                .forEach(randomLongitude ->
-                    Optional.of(obstacleMap.getOrDefault(randomLatitude, new HashSet<>()))
-                        .flatMap(meridian -> Optional.of(meridian.add(randomLongitude)).map(add -> meridian))
-                        .ifPresent(meridian -> obstacleMap.putIfAbsent(randomLatitude, meridian)))))
-            .map(meridianStream -> obstacleMap)).get();
+    Map<Integer, Set<Integer>> TEST_TERRAIN_OBSTACLES = IntStream
+        .range(0, RandomUtils.nextInt(0, TERRAIN_HEIGHT))
+        .mapToObj(x -> RandomUtils.nextInt(0, TERRAIN_HEIGHT))
+        .collect(Collectors.toMap(Function.identity(), entry -> IntStream
+            .range(0, RandomUtils.nextInt(0, TERRAIN_WIDTH))
+            .mapToObj(x -> RandomUtils.nextInt(0, TERRAIN_WIDTH))
+            .collect(Collectors.toSet())));
 
     MarsTerrain TEST_TERRAIN_NO_WRAP_NO_OBSTACLES = MarsTerrain
         .builder().dimensions(TEST_TERRAIN_DIMENSIONS).build();
