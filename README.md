@@ -1,18 +1,16 @@
-##### ABA English
-# Mars Rover Mission
+##### Mars Rover Mission
 ### Requirement:
-At ABA English we are ready to launch our brand new mars rover to teach english to our alien neighbors on Mars. The last thing we need to do is create an API to send commands from ground control to the Mars mission and you are the person chosen to perform this task.
-
-We just need an API written in Java with instructions to execute it. The solution can be as complex as you want. It’s important to note that it’s by no means a test, we just want to get a sense for how you write/test code and solve problems. Feel free to use any build tools, frameworks and libraries you would like to achieve the task.
-
-This is a list of actions Mars rover could perform, you are free to use one action, all of them or invent new ones:
- - To move in any direction
- - To stand still charging its batteries 
- - To transmit texts in English
-
-You can send us the application via email, GitHub, bitbucket, etc...
+As part of the team that explores Mars by sending remotely controlled vehicles to the surface of the planet.
+Must develop an API that translates the commands sent from earth to instructions that are understood by the rover.
+- Given the initial starting point (x,y) of a rover and the direction (N,S,E,W) it is facing.
+- The rover receives a character array of commands.
+- Implement commands that move the rover forward/backward (f,b).
+- Implement commands that turn the rover left/right (l,r).
+- Implement wrapping from one edge of the grid to another. (planets are spheres after all)
+- Implement obstacle detection before each move to a new square. If a given sequence of commands encounters an obstacle, the rover moves up to the last possible point, aborts the sequence and reports the obstacle.
 #
 ## Notes
+Inspired by [Kata Log Rocks](http://kata-log.rocks/mars-rover-kata) 
 ###### by Ini Barker
 
 
