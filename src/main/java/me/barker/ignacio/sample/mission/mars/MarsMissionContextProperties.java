@@ -20,16 +20,16 @@ public class MarsMissionContextProperties {
 
     public MarsTerrain extractTerrainData() {
         return MarsTerrain.builder()
-            .dimensions(Pair.of(abs(getTerrain().getHeight()), abs(getTerrain().getWidth())))
-            .wrapping(Pair.of(getTerrain().getHWrap(), getTerrain().getHWrap()))
-            .obstacles(getTerrain().getObstacles())
+            .dimensions(Pair.of(abs(terrain.getHeight()), abs(terrain.getWidth())))
+            .wrapping(Pair.of(terrain.getHWrap(), terrain.getHWrap()))
+            .obstacles(terrain.getObstacles())
             .build();
     }
 
     public MarsRover extractRoverData() {
         return MarsRover.builder()
-            .position(Pair.of(getRover().getParallel(), getRover().getMeridian()))
-            .facing(getRover().getDirection())
+            .position(Pair.of(rover.getParallel(), rover.getMeridian()))
+            .facing(rover.getDirection())
             .build();
     }
 

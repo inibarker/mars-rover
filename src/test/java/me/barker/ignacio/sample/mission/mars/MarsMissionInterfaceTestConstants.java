@@ -24,6 +24,7 @@ public interface MarsMissionInterfaceTestConstants {
     Map<Integer, Set<Integer>> TEST_TERRAIN_OBSTACLES = IntStream
         .range(0, RandomUtils.nextInt(0, TERRAIN_HEIGHT))
         .mapToObj(x -> RandomUtils.nextInt(0, TERRAIN_HEIGHT))
+        .distinct()
         .collect(Collectors.toMap(Function.identity(), entry -> IntStream
             .range(0, RandomUtils.nextInt(0, TERRAIN_WIDTH))
             .mapToObj(x -> RandomUtils.nextInt(0, TERRAIN_WIDTH))

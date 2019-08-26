@@ -29,4 +29,4 @@ mission.mars:
   rover:
     parallel: 0
     meridian: 0
-    direction: 0
+    direction: north

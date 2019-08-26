@@ -20,7 +20,10 @@ import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestCons
 import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestConstants.TERRAIN_MIDDLE_HEIGHT;
 import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestConstants.TERRAIN_MIDDLE_WIDTH;
 import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestConstants.TEST_TERRAIN_NO_WRAP_NO_OBSTACLES;
+import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestConstants.TEST_TERRAIN_NO_WRAP_WITH_OBSTACLES;
+import static me.barker.ignacio.sample.mission.mars.MarsMissionInterfaceTestConstants.TEST_TERRAIN_OBSTACLES;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -65,23 +68,19 @@ public class MarsMissionInterfaceTest {
     }
 
     @Test
-    public void testMoveRover() {
-        underTest.moveRover(false);
-
-    }
-
-    @Test
     public void testObstaclePresent() {
-
-        underTest.noObstaclePresent(null);
+        when(marsMissionContextProperties.extractTerrainData())
+            .thenReturn(TEST_TERRAIN_NO_WRAP_WITH_OBSTACLES);
+        underTest.setUp();
+        TEST_TERRAIN_OBSTACLES.entrySet()
+            .stream()
+            .flatMap(entry -> entry.getValue().stream().map(value -> Pair.of(entry.getKey(), value)))
+            .peek(System.out::println)
+            .forEach(pair -> assertFalse(underTest.noObstaclePresent(pair)));
     }
 
     @Test
     public void testObstacleAbsent() {
-        when(marsMissionContextProperties.extractTerrainData())
-            .thenReturn(TEST_TERRAIN_NO_WRAP_NO_OBSTACLES);
-
-        underTest.setUp();
         assertTrue(underTest.noObstaclePresent(Pair.of(TERRAIN_MIDDLE_HEIGHT, TERRAIN_MIDDLE_WIDTH)));
     }
 
@@ -122,13 +121,13 @@ public class MarsMissionInterfaceTest {
             wrapIntoDimension(TERRAIN_MIDDLE_HEIGHT, false, TERRAIN_HEIGHT));
         assertEquals(TERRAIN_MIDDLE_HEIGHT, MarsMissionInterface.
             wrapIntoDimension(TERRAIN_MIDDLE_HEIGHT, true, TERRAIN_HEIGHT));
-        assertEquals(TERRAIN_HEIGHT, MarsMissionInterface.
+        assertEquals(TERRAIN_HEIGHT - 1, MarsMissionInterface.
             wrapIntoDimension(Integer.MAX_VALUE, false, TERRAIN_HEIGHT));
+        assertEquals(TERRAIN_HEIGHT - 1, MarsMissionInterface.
+            wrapIntoDimension(Integer.MIN_VALUE, true, TERRAIN_HEIGHT));
         assertEquals(0, MarsMissionInterface.
             wrapIntoDimension(Integer.MAX_VALUE, true, TERRAIN_HEIGHT));
         assertEquals(0, MarsMissionInterface.
             wrapIntoDimension(Integer.MIN_VALUE, false, TERRAIN_HEIGHT));
-        assertEquals(TERRAIN_HEIGHT, MarsMissionInterface.
-            wrapIntoDimension(Integer.MIN_VALUE, true, TERRAIN_HEIGHT));
     }
 }

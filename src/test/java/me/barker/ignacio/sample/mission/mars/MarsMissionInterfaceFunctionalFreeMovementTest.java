@@ -26,14 +26,6 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
 
     private static final int COMMAND_AMOUNT = 10;
 
-    @Value
-    @Builder
-    private static final class OperationReport {
-        ControlCommand commandExecuted;
-        MarsRover previousRover;
-        MissionStatus missionReport;
-    }
-
     @Mock
     private MarsMissionContextProperties marsMissionContextProperties;
 
@@ -72,12 +64,11 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
                 .missionReport(report).build()))))
             .recordWith(ArrayList::new)
             .consumeRecordedWith(reportList -> {
-                assertEquals(COMMAND_AMOUNT, reportList.size());
                 reportList.forEach(report -> {
                     assertEquals(report.getCommandExecuted(), report.getMissionReport().lastCommand());
                     assertFacing(report);
                     assertFreeMovement(report);
-                    assertEquals(MarsMissionInterfaceTestConstants.TEST_TERRAIN_NO_WRAP_NO_OBSTACLES, report.getMissionReport().terrain());
+                    assertEquals(MarsMissionInterfaceTestConstants.TEST_TERRAIN_WITH_WRAP_NO_OBSTACLES, report.getMissionReport().terrain());
                 });
             }).expectNextCount(COMMAND_AMOUNT)
             .verifyComplete();
@@ -111,5 +102,12 @@ public class MarsMissionInterfaceFunctionalFreeMovementTest {
         assertEquals(operationReport.getPreviousRover().getPosition(),
             operationReport.getMissionReport().rover().getPosition());
     }
+}
 
+@Value
+@Builder
+final class OperationReport {
+    ControlCommand commandExecuted;
+    MarsRover previousRover;
+    MissionStatus missionReport;
 }
