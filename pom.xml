@@ -11,17 +11,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>me.barker.ignacio.sample.aba</groupId>
+    <groupId>me.barker.ignacio.sample</groupId>
     <artifactId>mars-rover-mission</artifactId>
     <version>x</version>
 
     <name>Mars Rover Mission</name>
-    <url>https://github.com/inibarker/aba-mars-rover</url>
-
-    <organization>
-        <name>ABA English</name>
-        <url>https://github.com/abaenglish</url>
-    </organization>
+    <url>https://github.com/inibarker/mars-rover</url>
 
     <properties>
         <java.version>1.8</java.version>
